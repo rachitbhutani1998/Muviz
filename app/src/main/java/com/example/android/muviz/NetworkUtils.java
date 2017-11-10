@@ -3,6 +3,11 @@ package com.example.android.muviz;
 
 import android.net.Uri;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -28,5 +33,26 @@ class NetworkUtils {
             e.printStackTrace();
         }
         return url;
+    }
+
+    private String getJSONfromURL(URL url){
+        HttpURLConnection connection=null;
+        BufferedReader buffer=null;
+        StringBuilder stringBuffer=new StringBuilder();
+        try {
+            connection= (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream is= connection.getInputStream();
+
+            buffer=new BufferedReader(new InputStreamReader(is));
+
+
+            while (buffer.readLine() != null) {
+                stringBuffer.append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuffer.toString();
     }
 }

@@ -23,7 +23,7 @@ public class GridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
         mGridView=findViewById(R.id.movies_grid);
-
+        fillLayout(sort+order);
     }
 
     @Override

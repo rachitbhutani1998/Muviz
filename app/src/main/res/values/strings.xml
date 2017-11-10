@@ -4,4 +4,5 @@
     <string name="popularity">Popularity</string>
     <string name="ratings">Ratings</string>
     <string name="filter">Filter</string>
+    <string name="change_order">Toggle List Order</string>
 </resources>
