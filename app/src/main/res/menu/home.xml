@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="@string/sort" app:showAsAction="ifRoom" android:id="@+id/sort_button"/>
+    <item android:title="@string/filter" android:icon="@drawable/ic_swap_vert_white_24dp" app:showAsAction="ifRoom" android:id="@+id/filter_button"/>
+    <item android:title="@string/sort" android:icon="@drawable/ic_sort_white_24dp" app:showAsAction="ifRoom" android:id="@+id/sort_button">
+        <menu>
+            <item android:title="@string/popularity" android:id="@+id/sort_popular"/>
+            <item android:title="@string/ratings" android:id="@+id/sort_rating"/>
+        </menu>
+    </item>
 </menu>

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Muviz</string>
-    <string name="sort">Sort</string>
+    <string name="sort">Sort By</string>
+    <string name="popularity">Popularity</string>
+    <string name="ratings">Ratings</string>
+    <string name="filter">Filter</string>
 </resources>
