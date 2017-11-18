@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Muviz</string>
-    <string name="sort">Sort By</string>
+    <string name="sort">Sort By:</string>
     <string name="popularity">Popularity</string>
     <string name="ratings">Ratings</string>
     <string name="filter">Filter</string>
-    <string name="change_order">Toggle List Order</string>
+    <string name="change_order">Order By:</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="asc">Ascending</string>
+    <string name="desc">Descending</string>
+    <string name="save_settings">Save Settings</string>
 </resources>

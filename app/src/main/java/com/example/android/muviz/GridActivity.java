@@ -1,5 +1,7 @@
 package com.example.android.muviz;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,54 +13,65 @@ import android.widget.Toast;
 import java.net.URL;
 
 public class GridActivity extends AppCompatActivity {
-    static final String TAG= "GridActivity";
+    static final String TAG = "GridActivity";
     TextView mGridView;
-    int popular=1,rated=2;
     URL mUrl;
-    String order=".desc",sort="popularity";
+    String sort = "popularity",order = ".desc";
+    MovieAsyncTask movieAsyncTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-        mGridView=findViewById(R.id.movies_grid);
-        fillLayout(sort+order);
+        Intent intent=getIntent();
+        if (getIntent()!=null){
+            sort=intent.getStringExtra("sort");
+            order=intent.getStringExtra("order");
+        }
+        mGridView = findViewById(R.id.movies_grid);
+        movieAsyncTask = new MovieAsyncTask();
+        fillLayout(sort + order);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home,menu);
+        getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
-    void fillLayout(String query){
-        mUrl=NetworkUtils.buildURL(query);
-        mGridView.setText(mUrl.toString());
-        Log.e(TAG, "onOptionsItemSelected() returned: " + mUrl);
+    void fillLayout(String query) {
+        mUrl = NetworkUtils.buildURL(query);
+        movieAsyncTask.execute(mUrl);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int i=item.getItemId();
-        switch (i){
-            case R.id.sort_popular:
-                sort="popularity";
-                fillLayout(sort+order);
-                break;
-            case R.id.sort_rating:
-                sort="vote_average";
-                fillLayout(sort+order);
-                break;
-            case R.id.filter_button:
-                if (order.equals(".desc"))
-                    order=".asc";
-                else
-                    order=".desc";
-                fillLayout(sort+order);
+        int i = item.getItemId();
+        switch (i) {
+            case R.id.settings:
+                Intent goToSettings = new Intent(GridActivity.this, SettingActivity.class);
+                startActivity(goToSettings);
                 break;
         }
         return true;
     }
 
+    public class MovieAsyncTask extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL url = urls[0];
+            String jsonResponse = NetworkUtils.getJSONfromURL(url);
+            Log.e(TAG, "onOptionsItemSelected() returned: " + mUrl);
+            Log.e(TAG, "onOptionsItemSelected() returned: " + jsonResponse);
+            return jsonResponse;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mGridView.setText(mUrl.toString());
+            mGridView.append("\n\n" + s);
+        }
+    }
 }

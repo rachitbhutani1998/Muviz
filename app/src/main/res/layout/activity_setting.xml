@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context="com.example.android.muviz.SettingActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio_sort"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/popularity"
+            android:textSize="18sp"
+            android:id="@+id/sort_popular"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/ratings"
+            android:id="@+id/sort_average"
+            android:textSize="18sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_order"
+        android:paddingTop="16dp"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio_order"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/asc"
+            android:textSize="18sp"
+            android:id="@+id/order_asc"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/desc"
+            android:id="@+id/order_desc"
+            android:textSize="18sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+    </RadioGroup>
+    </LinearLayout>
+

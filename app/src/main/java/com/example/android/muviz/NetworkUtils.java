@@ -35,9 +35,9 @@ class NetworkUtils {
         return url;
     }
 
-    private String getJSONfromURL(URL url){
-        HttpURLConnection connection=null;
-        BufferedReader buffer=null;
+    static String getJSONfromURL(URL url){
+        HttpURLConnection connection;
+        BufferedReader buffer;
         StringBuilder stringBuffer=new StringBuilder();
         try {
             connection= (HttpURLConnection) url.openConnection();
