@@ -16,22 +16,24 @@ public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
     TextView mGridView;
     URL mUrl;
-    String sort = "popularity",order = ".desc";
-    MovieAsyncTask movieAsyncTask;
+    String sort = "popularity", order = ".desc";
+//    MovieAsyncTask movieAsyncTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-        Intent intent=getIntent();
-        if (getIntent()!=null){
-            sort=intent.getStringExtra("sort");
-            order=intent.getStringExtra("order");
-            Toast.makeText(this, "Sorted By"+sort +" Ordered By "+order, Toast.LENGTH_SHORT).show();
+        Intent intent = getIntent();
+        sort = intent.getStringExtra("sort");
+        order = intent.getStringExtra("order");
+        if (sort==null||order==null){
+            sort = "popularity";
+            order = ".desc";
         }
+        Toast.makeText(this, "Sorted By" + sort + " Ordered By " + order, Toast.LENGTH_SHORT).show();
         mGridView = findViewById(R.id.movies_grid);
-        movieAsyncTask = new MovieAsyncTask();
+//        movieAsyncTask = new MovieAsyncTask();
         fillLayout(sort + order);
     }
 
@@ -43,7 +45,8 @@ public class GridActivity extends AppCompatActivity {
 
     void fillLayout(String query) {
         mUrl = NetworkUtils.buildURL(query);
-        movieAsyncTask.execute(mUrl);
+        mGridView.setText(mUrl.toString());
+//        movieAsyncTask.execute(mUrl);
     }
 
     @Override
@@ -52,8 +55,8 @@ public class GridActivity extends AppCompatActivity {
         switch (i) {
             case R.id.settings:
                 Intent goToSettings = new Intent(GridActivity.this, SettingActivity.class);
-                goToSettings.putExtra("sort",sort+"");
-                goToSettings.putExtra("order",order+"");
+                goToSettings.putExtra("sort", sort + "");
+                goToSettings.putExtra("order", order + "");
                 startActivity(goToSettings);
                 break;
         }
@@ -73,8 +76,8 @@ public class GridActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            mGridView.setText(mUrl.toString());
-            mGridView.append("\n\n" + s);
+//            mGridView.setText(mUrl.toString());
+//            mGridView.append("\n\n" + s);
         }
     }
 }
