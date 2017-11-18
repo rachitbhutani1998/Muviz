@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,21 +20,25 @@ import java.util.ArrayList;
 
 public class SettingActivity extends AppCompatActivity {
     String sort="popularity",order=".desc";
+    RadioButton sortPop,sortAvg,orderAsc,orderDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        Intent intent=getIntent();
+        sortPop=findViewById(R.id.sort_popular);
+        sortAvg=findViewById(R.id.sort_average);
+        orderAsc=findViewById(R.id.order_asc);
+        orderDesc=findViewById(R.id.order_desc);
 
-        RadioGroup sortGroup=findViewById(R.id.radio_sort);
-        if (sortGroup.getCheckedRadioButtonId()==R.id.sort_average)
-            sort="vote_average";
-        else sort="popularity";
+        if (intent.getStringExtra("sort").equals("vote_average"))
+            sortAvg.toggle();
+        else sortPop.toggle();
 
-        RadioGroup orderGroup=findViewById(R.id.radio_order);
-        if (orderGroup.getCheckedRadioButtonId()==R.id.order_asc)
-            order=".asc";
-        else order=".desc";
+        if (intent.getStringExtra("order").equals(".asc"))
+            orderAsc.toggle();
+        else orderDesc.toggle();
 
     }
 
@@ -53,6 +58,14 @@ public class SettingActivity extends AppCompatActivity {
 
     private void saveSettings() {
         Intent goToMain=new Intent(SettingActivity.this,GridActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (sortPop.isChecked())
+            sort="popularity";
+        if (sortAvg.isChecked())
+            sort="vote_average";
+        if (orderDesc.isChecked())
+            order=".desc";
+        if (orderAsc.isChecked())
+            order=".asc";
         goToMain.putExtra("sort",sort+"");
         goToMain.putExtra("order",order+"");
         startActivity(goToMain);

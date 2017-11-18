@@ -9,4 +9,5 @@
     <string name="asc">Ascending</string>
     <string name="desc">Descending</string>
     <string name="save_settings">Save Settings</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -28,6 +28,7 @@ public class GridActivity extends AppCompatActivity {
         if (getIntent()!=null){
             sort=intent.getStringExtra("sort");
             order=intent.getStringExtra("order");
+            Toast.makeText(this, "Sorted By"+sort +" Ordered By "+order, Toast.LENGTH_SHORT).show();
         }
         mGridView = findViewById(R.id.movies_grid);
         movieAsyncTask = new MovieAsyncTask();
@@ -51,6 +52,8 @@ public class GridActivity extends AppCompatActivity {
         switch (i) {
             case R.id.settings:
                 Intent goToSettings = new Intent(GridActivity.this, SettingActivity.class);
+                goToSettings.putExtra("sort",sort+"");
+                goToSettings.putExtra("order",order+"");
                 startActivity(goToSettings);
                 break;
         }
