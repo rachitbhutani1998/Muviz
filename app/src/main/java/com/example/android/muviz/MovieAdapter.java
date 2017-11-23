@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -21,22 +22,29 @@ import java.util.ArrayList;
 public class MovieAdapter extends ArrayAdapter<Movies> {
 
     MovieAdapter(@NonNull Context context, ArrayList<Movies> list) {
-        super(context, 0,list);
+        super(context, 0, list);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItemView=convertView;
-        if (listItemView==null){
-            listItemView= LayoutInflater.from(getContext()).inflate(R.layout.movie_item,parent,false);
+        View listItemView = convertView;
+        if (listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item, parent, false);
         }
-        Movies thisMovie=getItem(position);
-        ImageView imageView=listItemView.findViewById(R.id.movie_image);
+        final Movies thisMovie = getItem(position);
+        ImageView imageView = listItemView.findViewById(R.id.movie_image);
         if (thisMovie != null) {
             Glide.with(getContext()).load(thisMovie.getPoster()).into(imageView);
-            Log.i("Adapter: ", "getView: "+thisMovie.getPoster());
-        }
+            Log.i("Adapter: ", "getView: " + thisMovie.getPoster());
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(getContext(), "" + thisMovie.getMovieTitle(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+            }
         return listItemView;
     }
 }

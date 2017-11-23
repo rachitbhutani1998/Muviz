@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class GridActivity extends AppCompatActivity {
     MovieAsyncTask movieAsyncTask;
     ArrayList<Movies> moviesArrayList;
     MovieAdapter mAdapter;
+    ProgressBar progressSpinner;
 
 
     @Override
@@ -35,6 +38,7 @@ public class GridActivity extends AppCompatActivity {
             sort = "popularity";
             order = ".desc";
         }
+        progressSpinner=findViewById(R.id.progress_bar);
         Toast.makeText(this, "Sorted By" + sort + " Ordered By " + order, Toast.LENGTH_SHORT).show();
         mGridView = findViewById(R.id.movies_grid);
         movieAsyncTask = new MovieAsyncTask();
@@ -70,6 +74,10 @@ public class GridActivity extends AppCompatActivity {
     }
 
     public class MovieAsyncTask extends AsyncTask<URL, Void, ArrayList<Movies>> {
+        @Override
+        protected void onPreExecute() {
+            progressSpinner.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected ArrayList<Movies> doInBackground(URL... urls) {
@@ -88,6 +96,7 @@ public class GridActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Movies> s) {
+            progressSpinner.setVisibility(View.GONE);
             mAdapter.clear();
             mAdapter.addAll(s);
         }

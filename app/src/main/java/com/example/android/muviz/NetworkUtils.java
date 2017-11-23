@@ -104,7 +104,8 @@ class NetworkUtils {
                 JSONObject iterator=resultArray.optJSONObject(i);
                 String poster_path=iterator.optString("poster_path");
                 String movie_id=iterator.optString("id");
-                list.add(new Movies(poster_path,movie_id));
+                String movie_name=iterator.optString("title");
+                list.add(new Movies(poster_path,movie_id,movie_name));
             }
         } catch (JSONException e) {
             e.printStackTrace();
