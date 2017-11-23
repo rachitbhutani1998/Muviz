@@ -44,26 +44,7 @@ class NetworkUtils {
         return url;
     }
 
-    static String getJSONfromURL(URL url){
-        HttpURLConnection connection;
-        BufferedReader buffer;
-        StringBuilder stringBuffer=new StringBuilder();
-        try {
-            connection= (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream is= connection.getInputStream();
 
-            buffer=new BufferedReader(new InputStreamReader(is));
-
-
-            while (buffer.readLine() != null) {
-                stringBuffer.append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringBuffer.toString();
-    }
 
     public static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = null;

@@ -1,18 +1,19 @@
 package com.example.android.muviz;
 
-public class Movies {
+class Movies {
     private String mPosterUrl,mId;
+    private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/w500";
 
-    public Movies(String posterUrl,String id){
-        mPosterUrl=posterUrl;
+    Movies(String posterUrl, String id){
+        mPosterUrl=POSTER_BASE_URL+posterUrl;
         mId=id;
     }
 
-    public String getPoster(){
+    String getPoster(){
         return mPosterUrl;
     }
 
-    public String getMovieId(){
+    String getMovieId(){
         return mId;
     }
 }

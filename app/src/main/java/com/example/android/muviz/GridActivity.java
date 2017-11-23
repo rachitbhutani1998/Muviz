@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -16,11 +16,12 @@ import java.util.ArrayList;
 
 public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
-    TextView mGridView;
+    GridView mGridView;
     URL mUrl;
     String sort = "popularity", order = ".desc";
     MovieAsyncTask movieAsyncTask;
-    ArrayList<Movies> moviesArrayList=null;
+    ArrayList<Movies> moviesArrayList;
+    MovieAdapter mAdapter;
 
 
     @Override
@@ -37,6 +38,9 @@ public class GridActivity extends AppCompatActivity {
         Toast.makeText(this, "Sorted By" + sort + " Ordered By " + order, Toast.LENGTH_SHORT).show();
         mGridView = findViewById(R.id.movies_grid);
         movieAsyncTask = new MovieAsyncTask();
+        moviesArrayList= new ArrayList<>();
+        mAdapter=new MovieAdapter(this,moviesArrayList);
+        mGridView.setAdapter(mAdapter);
         fillLayout(sort + order);
     }
 
@@ -48,7 +52,6 @@ public class GridActivity extends AppCompatActivity {
 
     void fillLayout(String query) {
         mUrl = NetworkUtils.buildURL(query);
-        mGridView.setText(mUrl.toString());
         movieAsyncTask.execute(mUrl);
     }
 
@@ -85,9 +88,8 @@ public class GridActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Movies> s) {
-            mGridView.setText(mUrl.toString());
-            for(int i=0;i<s.size();i++)
-                mGridView.append("\n\n" + s.get(i).getMovieId()+"\n"+s.get(i).getPoster());
+            mAdapter.clear();
+            mAdapter.addAll(s);
         }
     }
 }
