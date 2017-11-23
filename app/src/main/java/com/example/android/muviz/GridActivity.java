@@ -10,14 +10,17 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
     TextView mGridView;
     URL mUrl;
     String sort = "popularity", order = ".desc";
-//    MovieAsyncTask movieAsyncTask;
+    MovieAsyncTask movieAsyncTask;
+    ArrayList<Movies> moviesArrayList=null;
 
 
     @Override
@@ -33,7 +36,7 @@ public class GridActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Sorted By" + sort + " Ordered By " + order, Toast.LENGTH_SHORT).show();
         mGridView = findViewById(R.id.movies_grid);
-//        movieAsyncTask = new MovieAsyncTask();
+        movieAsyncTask = new MovieAsyncTask();
         fillLayout(sort + order);
     }
 
@@ -46,7 +49,7 @@ public class GridActivity extends AppCompatActivity {
     void fillLayout(String query) {
         mUrl = NetworkUtils.buildURL(query);
         mGridView.setText(mUrl.toString());
-//        movieAsyncTask.execute(mUrl);
+        movieAsyncTask.execute(mUrl);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class GridActivity extends AppCompatActivity {
         int i = item.getItemId();
         switch (i) {
             case R.id.settings:
-                Intent goToSettings = new Intent(GridActivity.this, SettingActivity.class);
+                Intent goToSettings = new Intent(GridActivity.this, SettingActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goToSettings.putExtra("sort", sort + "");
                 goToSettings.putExtra("order", order + "");
                 startActivity(goToSettings);
@@ -63,21 +66,28 @@ public class GridActivity extends AppCompatActivity {
         return true;
     }
 
-    public class MovieAsyncTask extends AsyncTask<URL, Void, String> {
+    public class MovieAsyncTask extends AsyncTask<URL, Void, ArrayList<Movies>> {
 
         @Override
-        protected String doInBackground(URL... urls) {
+        protected ArrayList<Movies> doInBackground(URL... urls) {
             URL url = urls[0];
-            String jsonResponse = NetworkUtils.getJSONfromURL(url);
+            String jsonResponse = null;
+            try {
+                jsonResponse = NetworkUtils.makeHttpRequest(url);
+                moviesArrayList=NetworkUtils.extractMovieList(jsonResponse);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Log.e(TAG, "onOptionsItemSelected() returned: " + mUrl);
             Log.e(TAG, "onOptionsItemSelected() returned: " + jsonResponse);
-            return jsonResponse;
+            return moviesArrayList;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-//            mGridView.setText(mUrl.toString());
-//            mGridView.append("\n\n" + s);
+        protected void onPostExecute(ArrayList<Movies> s) {
+            mGridView.setText(mUrl.toString());
+            for(int i=0;i<s.size();i++)
+                mGridView.append("\n\n" + s.get(i).getMovieId()+"\n"+s.get(i).getPoster());
         }
     }
 }
