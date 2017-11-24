@@ -1,6 +1,7 @@
 package com.example.android.muviz;
 
 
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.util.Log;
 

@@ -1,8 +1,9 @@
 package com.example.android.muviz;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +29,9 @@ public class GridActivity extends AppCompatActivity {
     ArrayList<Movies> moviesArrayList;
     MovieAdapter mAdapter;
     ProgressBar progressSpinner;
-    AlertDialog dialog;
+    LinearLayout noConnView;
+    ConnectivityManager manager;
+    Button mRetry;
 
 
     @Override
@@ -42,13 +46,31 @@ public class GridActivity extends AppCompatActivity {
             order = ".desc";
         }
         progressSpinner=findViewById(R.id.progress_bar);
-        Toast.makeText(this, "Sorted By" + sort + " Ordered By " + order, Toast.LENGTH_SHORT).show();
         mGridView = findViewById(R.id.movies_grid);
         movieAsyncTask = new MovieAsyncTask();
         moviesArrayList= new ArrayList<>();
         mAdapter=new MovieAdapter(this,moviesArrayList);
         mGridView.setAdapter(mAdapter);
-        fillLayout(sort + order);
+        noConnView=findViewById(R.id.no_con_view);
+        manager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mRetry=findViewById(R.id.retry_button);
+        checkInternetConnection();
+        mRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noConnView.setVisibility(View.INVISIBLE);
+                checkInternetConnection();
+            }
+        });
+    }
+
+    public void checkInternetConnection(){
+        if (manager!=null) {
+            if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                    || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+                fillLayout(sort + order);
+            else noConnView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -104,4 +126,5 @@ public class GridActivity extends AppCompatActivity {
             mAdapter.addAll(s);
         }
     }
+
 }
