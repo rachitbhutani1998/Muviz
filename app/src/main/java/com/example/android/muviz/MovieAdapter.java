@@ -3,6 +3,7 @@ package com.example.android.muviz;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MovieAdapter extends ArrayAdapter<Movies> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item, parent, false);
@@ -40,7 +41,8 @@ public class MovieAdapter extends ArrayAdapter<Movies> {
             imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Toast.makeText(getContext(), "" + thisMovie.getMovieTitle(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar= Snackbar.make(parent,thisMovie.getMovieTitle(),Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                     return true;
                 }
             });

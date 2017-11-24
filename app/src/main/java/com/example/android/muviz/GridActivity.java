@@ -1,5 +1,7 @@
 package com.example.android.muviz;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,7 @@ public class GridActivity extends AppCompatActivity {
     ArrayList<Movies> moviesArrayList;
     MovieAdapter mAdapter;
     ProgressBar progressSpinner;
+    AlertDialog dialog;
 
 
     @Override
