@@ -124,4 +124,14 @@ class NetworkUtils {
         }
         return list;
     }
+
+    public static Movies extractMovie(String detailJSON) throws JSONException {
+            JSONObject json=new JSONObject(detailJSON);
+            String title=json.optString("title");
+            String release_date=json.optString("release_date");
+            String plot=json.optString("overview");
+            String poster=json.optString("backdrop_path");
+            String rating=json.optString("vote_average");
+            return new Movies(poster,title,release_date,rating,plot);
+    }
 }

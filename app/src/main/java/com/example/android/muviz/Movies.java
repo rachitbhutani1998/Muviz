@@ -1,11 +1,8 @@
 package com.example.android.muviz;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-class Movies implements Parcelable{
-    private String mPosterUrl,mId,mTitle;
-    private static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/w500";
+class Movies{
+    private String mPosterUrl,mId,mTitle,mRelease,mRating,mPlot,mBackdrop;
+    public static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/w500";
 
     Movies(String posterUrl, String id,String title){
         mPosterUrl=POSTER_BASE_URL+posterUrl;
@@ -13,44 +10,39 @@ class Movies implements Parcelable{
         mTitle=title;
     }
 
-    protected Movies(Parcel in) {
-        mPosterUrl = in.readString();
-        mId = in.readString();
-        mTitle = in.readString();
+    Movies(String posterUrl,String title,String release_date,String rating,String plot){
+        mBackdrop=posterUrl;
+        mTitle=title;
+        mRelease=release_date;
+        mRating=rating;
+        mPlot=plot;
     }
 
-    public static final Creator<Movies> CREATOR = new Creator<Movies>() {
-        @Override
-        public Movies createFromParcel(Parcel in) {
-            return new Movies(in);
-        }
+    String getReleaseDate(){
+        return mRelease;
+    }
 
-        @Override
-        public Movies[] newArray(int size) {
-            return new Movies[size];
-        }
-    };
+    String getRating(){
+        return mRating;
+    }
+
+    String getPlot(){
+        return mPlot;
+    }
+
+    String getBackdrop(){
+        return mBackdrop;
+    }
 
     String getPoster(){
         return mPosterUrl;
     }
+
     String getMovieTitle(){
         return mTitle;
     }
 
     String getMovieId(){
         return mId;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mPosterUrl);
-        parcel.writeString(mId);
-        parcel.writeString(mTitle);
     }
 }

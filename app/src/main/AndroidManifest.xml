@@ -23,7 +23,7 @@
         <activity
             android:name=".SettingActivity"
             android:label="Settings" />
-        <activity android:name=".DetailActivity" android:parentActivityName=".GridActivity"/>
+        <activity android:name=".DetailActivity" android:parentActivityName=".GridActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>
