@@ -24,7 +24,7 @@ class NetworkUtils {
 
     private static final String BASE_URL= "https://api.themoviedb.org/3/discover/movie";
 
-    private static final String BASE_POSTER_URL="http://image.tmdb.org/t/p/w500";
+    private static final String BASE_DETAIL_URL="https://api.themoviedb.org/3/movie/";
 
     private static final String SORT_PARAM="sort_by";
 
@@ -39,6 +39,17 @@ class NetworkUtils {
         URL url=null;
         try {
              url=new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    static URL buildDetailURL(String id){
+        Uri uri=Uri.parse(BASE_DETAIL_URL).buildUpon().appendPath(id).appendQueryParameter(API_KEY,apikey).build();
+        URL url=null;
+        try {
+            url=new URL(uri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

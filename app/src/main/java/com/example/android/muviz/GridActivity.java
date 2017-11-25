@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +54,23 @@ public class GridActivity extends AppCompatActivity {
         moviesArrayList= new ArrayList<>();
         mAdapter=new MovieAdapter(this,moviesArrayList);
         mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent goToDetail=new Intent(GridActivity.this,DetailActivity.class);
+                goToDetail.putExtra("movie_id",moviesArrayList.get(i).getMovieId());
+                goToDetail.putExtra("movie_title",moviesArrayList.get(i).getMovieTitle());
+                startActivity(goToDetail);
+            }
+        });
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Snackbar snackbar= Snackbar.make(view,moviesArrayList.get(i).getMovieTitle(),Snackbar.LENGTH_SHORT);
+                snackbar.show();
+                return true;
+            }
+        });
         noConnView=findViewById(R.id.no_con_view);
         manager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mRetry=findViewById(R.id.retry_button);

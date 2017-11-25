@@ -38,14 +38,14 @@ public class MovieAdapter extends ArrayAdapter<Movies> {
         if (thisMovie != null) {
             Glide.with(getContext()).load(thisMovie.getPoster()).into(imageView);
             Log.i("Adapter: ", "getView: " + thisMovie.getPoster());
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    Snackbar snackbar= Snackbar.make(parent,thisMovie.getMovieTitle(),Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                    return true;
-                }
-            });
+//            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    Snackbar snackbar= Snackbar.make(parent,thisMovie.getMovieTitle(),Snackbar.LENGTH_SHORT);
+//                    snackbar.show();
+//                    return true;
+//                }
+//            });
             }
         return listItemView;
     }

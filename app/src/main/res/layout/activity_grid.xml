@@ -6,43 +6,48 @@
     android:background="@android:color/background_light"
     tools:context="com.example.android.muviz.GridActivity">
 
-    <GridView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/movies_grid"
-        android:numColumns="auto_fit"/>
+
     <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerInParent="true"
-        android:id="@+id/progress_bar"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
+
     <LinearLayout
+        android:id="@+id/no_con_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:id="@+id/no_con_view"
         android:visibility="invisible">
+
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/no_conn_sq"
-            android:contentDescription="@string/no_conn_desc"/>
+            android:contentDescription="@string/no_conn_desc"
+            android:src="@drawable/no_conn_sq" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="@string/no_conn_message"
             android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/background_dark"/>
+            android:textColor="@android:color/background_dark" />
+
         <Button
+            android:id="@+id/retry_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="@string/retry"
-            android:id="@+id/retry_button"/>
+            android:text="@string/retry" />
     </LinearLayout>
 
+    <GridView
+        android:id="@+id/movies_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit"/>
 </RelativeLayout>
