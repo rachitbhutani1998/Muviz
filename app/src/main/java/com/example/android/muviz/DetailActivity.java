@@ -1,6 +1,10 @@
 package com.example.android.muviz;
 
+import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     Movies movie;
     DetailAsyncTask mTask;
     Toolbar mToolbar;
+    ShortcutManager mShortcut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,9 +2,12 @@ package com.example.android.muviz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
@@ -35,12 +40,14 @@ public class GridActivity extends AppCompatActivity {
     LinearLayout noConnView;
     ConnectivityManager manager;
     Button mRetry;
+    ShortcutManager mShortcut;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
+        Intent widgetIntent=new Intent(this,DetailActivity.class);
         Intent intent = getIntent();
         sort = intent.getStringExtra("sort");
         order = intent.getStringExtra("order");
@@ -82,6 +89,18 @@ public class GridActivity extends AppCompatActivity {
                 checkInternetConnection();
             }
         });
+        widgetIntent.putExtra("movie_id","346364");
+        widgetIntent.putExtra("movie_title","It");
+        widgetIntent.setAction("Open_details");
+        if (Build.VERSION.SDK_INT >= 25) {
+            mShortcut=getSystemService(ShortcutManager.class);
+            ShortcutInfo shortcutInfo=new ShortcutInfo.Builder(this,"shortcut")
+                    .setShortLabel("Most Popular")
+                    .setLongLabel("The most popular movie yet")
+                    .setIntent(widgetIntent).build();
+            mShortcut.setDynamicShortcuts(Collections.singletonList(shortcutInfo));
+
+        }
     }
 
     public void checkInternetConnection(){
