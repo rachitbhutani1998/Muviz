@@ -99,7 +99,6 @@ public class GridActivity extends AppCompatActivity {
                     .setLongLabel("The most popular movie yet")
                     .setIntent(widgetIntent).build();
             mShortcut.setDynamicShortcuts(Collections.singletonList(shortcutInfo));
-
         }
     }
 

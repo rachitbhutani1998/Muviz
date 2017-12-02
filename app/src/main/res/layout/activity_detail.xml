@@ -32,17 +32,95 @@
                 android:contentDescription="@string/big_poster"
                 android:scaleType="fitCenter" />
 
-            <RatingBar
-                android:id="@+id/rating_bar"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:paddingBottom="5dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:numStars="5"
-                android:stepSize="0.5"
-                android:isIndicator="true" />
+                android:background="#3fff"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/rating_text"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rating_back"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </RelativeLayout>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="Title"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:padding="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"
+                    android:id="@+id/movie_title"/>
+                <TextView
+                    android:padding="5dp"
+                    android:text="Release Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:padding="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"
+                    android:id="@+id/movie_date"/>
+                <TextView
+                    android:text="Movie Plot"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20sp"
+                    android:id="@+id/movie_plot"/>
     </LinearLayout>
 </ScrollView>
