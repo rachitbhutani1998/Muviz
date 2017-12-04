@@ -72,8 +72,17 @@ public class GridActivity extends AppCompatActivity {
         });
         mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Snackbar snackbar= Snackbar.make(view,moviesArrayList.get(i).getMovieTitle(),Snackbar.LENGTH_SHORT);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Snackbar snackbar= Snackbar.make(view,moviesArrayList.get(i).getMovieTitle(),Snackbar.LENGTH_SHORT)
+                        .setAction("Open", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent goToDetail=new Intent(GridActivity.this,DetailActivity.class);
+                                goToDetail.putExtra("movie_id",moviesArrayList.get(i).getMovieId());
+                                goToDetail.putExtra("movie_title",moviesArrayList.get(i).getMovieTitle());
+                                startActivity(goToDetail);
+                            }
+                        });
                 snackbar.show();
                 return true;
             }
@@ -153,7 +162,6 @@ public class GridActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Log.e(TAG, "onOptionsItemSelected() returned: " + mUrl);
-            Log.e(TAG, "onOptionsItemSelected() returned: " + jsonResponse);
             return moviesArrayList;
         }
 
