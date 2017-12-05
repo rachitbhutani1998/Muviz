@@ -20,12 +20,10 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class GridActivity extends AppCompatActivity {
@@ -154,7 +152,7 @@ public class GridActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Movies> doInBackground(URL... urls) {
             URL url = urls[0];
-            String jsonResponse = null;
+            String jsonResponse;
             try {
                 jsonResponse = NetworkUtils.makeHttpRequest(url);
                 moviesArrayList=NetworkUtils.extractMovieList(jsonResponse);
