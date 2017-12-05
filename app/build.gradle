@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
+        buildConfigField("String","API_KEY",API_KEY)
         applicationId "com.example.android.muviz"
         minSdkVersion 16
         targetSdkVersion 26

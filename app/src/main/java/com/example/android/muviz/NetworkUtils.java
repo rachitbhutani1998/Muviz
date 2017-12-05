@@ -30,7 +30,7 @@ class NetworkUtils {
 
     private static final String API_KEY="api_key";
 
-    private static final String apikey="fb3d1cb6e2de1c138354e8f94a91e2c2";
+    private static final String apikey=BuildConfig.API_KEY;
 
     private static final String LOG_TAG="Network Utils: ";
 
