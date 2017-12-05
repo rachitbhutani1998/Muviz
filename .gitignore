@@ -1,7 +1,7 @@
 *.iml
 .gradle
-/local.properties
 /.idea/workspace.xml
+/local.properties
 /.idea/libraries
 .DS_Store
 /build
@@ -9,3 +9,4 @@
 .externalNativeBuild
 /gradle.properties
 /app/src/main/res/values/strings.xml
+/app/src/main/res/values/styles.xml
