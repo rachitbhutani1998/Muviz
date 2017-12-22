@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
@@ -126,7 +127,10 @@ public class GridActivity extends AppCompatActivity {
 
     void fillLayout(String query) {
         mUrl = NetworkUtils.buildURL(query);
-        movieAsyncTask.execute(mUrl);
+        if (mUrl==null)
+            Toast.makeText(this, "Check that API key in NetworkUtils", Toast.LENGTH_SHORT).show();
+        else
+            movieAsyncTask.execute(mUrl);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -55,7 +56,10 @@ public class DetailActivity extends AppCompatActivity {
 
         mUrl = NetworkUtils.buildDetailURL(getIntent().getStringExtra("movie_id"));
         mTask = new DetailAsyncTask();
-        mTask.execute(mUrl);
+        if (mUrl==null)
+            Toast.makeText(this, "Check the API key in NetworkUtils", Toast.LENGTH_SHORT).show();
+        else
+            mTask.execute(mUrl);
     }
 
     class DetailAsyncTask extends AsyncTask<URL, Void, Movies> {
