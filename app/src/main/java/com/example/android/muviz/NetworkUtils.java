@@ -1,7 +1,6 @@
 package com.example.android.muviz;
 
 
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -15,41 +14,40 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 class NetworkUtils {
 
-    private static final String BASE_URL= "https://api.themoviedb.org/3/discover/movie";
+    private static final String BASE_URL = "https://api.themoviedb.org/3/discover/movie";
 
-    private static final String BASE_DETAIL_URL="https://api.themoviedb.org/3/movie/";
+    private static final String BASE_DETAIL_URL = "https://api.themoviedb.org/3/movie/";
 
-    private static final String SORT_PARAM="sort_by";
+    private static final String SORT_PARAM = "sort_by";
 
-    private static final String API_KEY="api_key";
+    private static final String api_key = "api_key";
 
-    private static final String apikey=BuildConfig.API_KEY;
+    private static final String API_KEY = "<<Your API key here>>";
 
-    private static final String LOG_TAG="Network Utils: ";
+    private static final String LOG_TAG = "Network Utils: ";
 
-    static URL buildURL(String query){
-        Uri uri=Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM,query).appendQueryParameter(API_KEY,apikey).build();
-        URL url=null;
+    static URL buildURL(String query) {
+        Uri uri = Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM, query).appendQueryParameter(api_key, API_KEY).build();
+        URL url = null;
         try {
-             url=new URL(uri.toString());
+            url = new URL(uri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return url;
     }
 
-    static URL buildDetailURL(String id){
-        Uri uri=Uri.parse(BASE_DETAIL_URL).buildUpon().appendPath(id).appendQueryParameter(API_KEY,apikey).build();
-        URL url=null;
+    static URL buildDetailURL(String id) {
+        Uri uri = Uri.parse(BASE_DETAIL_URL).buildUpon().appendPath(id).appendQueryParameter(api_key, API_KEY).build();
+        URL url = null;
         try {
-            url=new URL(uri.toString());
+            url = new URL(uri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -57,8 +55,7 @@ class NetworkUtils {
     }
 
 
-
-    public static String makeHttpRequest(URL url) throws IOException {
+    static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = null;
 
         if (url == null) {
@@ -107,17 +104,17 @@ class NetworkUtils {
         return output.toString();
     }
 
-    public static ArrayList<Movies> extractMovieList(String movieJSON){
-        ArrayList<Movies> list=new ArrayList<>();
+    static ArrayList<Movies> extractMovieList(String movieJSON) {
+        ArrayList<Movies> list = new ArrayList<>();
         try {
-            JSONObject sortedJSON=new JSONObject(movieJSON);
-            JSONArray resultArray=sortedJSON.optJSONArray("results");
-            for(int i=0;i<resultArray.length();i++){
-                JSONObject iterator=resultArray.optJSONObject(i);
-                String poster_path=iterator.optString("poster_path");
-                String movie_id=iterator.optString("id");
-                String movie_name=iterator.optString("title");
-                list.add(new Movies(poster_path,movie_id,movie_name));
+            JSONObject sortedJSON = new JSONObject(movieJSON);
+            JSONArray resultArray = sortedJSON.optJSONArray("results");
+            for (int i = 0; i < resultArray.length(); i++) {
+                JSONObject iterator = resultArray.optJSONObject(i);
+                String poster_path = iterator.optString("poster_path");
+                String movie_id = iterator.optString("id");
+                String movie_name = iterator.optString("title");
+                list.add(new Movies(poster_path, movie_id, movie_name));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -125,13 +122,13 @@ class NetworkUtils {
         return list;
     }
 
-    public static Movies extractMovie(String detailJSON) throws JSONException {
-            JSONObject json=new JSONObject(detailJSON);
-            String title=json.optString("title");
-            String release_date=json.optString("release_date");
-            String plot=json.optString("overview");
-            String poster=json.optString("backdrop_path");
-            String rating=json.optString("vote_average");
-            return new Movies(poster,title,release_date,rating,plot);
+    static Movies extractMovie(String detailJSON) throws JSONException {
+        JSONObject json = new JSONObject(detailJSON);
+        String title = json.optString("title");
+        String release_date = json.optString("release_date");
+        String plot = json.optString("overview");
+        String poster = json.optString("backdrop_path");
+        String rating = json.optString("vote_average");
+        return new Movies(poster, title, release_date, rating, plot);
     }
 }

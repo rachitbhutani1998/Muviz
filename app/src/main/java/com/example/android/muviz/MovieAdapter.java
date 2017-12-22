@@ -3,22 +3,18 @@ package com.example.android.muviz;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-/**
- * Created by rachit on 23/11/17.
- */
 
 public class MovieAdapter extends ArrayAdapter<Movies> {
 
@@ -38,15 +34,7 @@ public class MovieAdapter extends ArrayAdapter<Movies> {
         if (thisMovie != null) {
             Glide.with(getContext()).load(thisMovie.getPoster()).into(imageView);
             Log.i("Adapter: ", "getView: " + thisMovie.getPoster());
-//            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    Snackbar snackbar= Snackbar.make(parent,thisMovie.getMovieTitle(),Snackbar.LENGTH_SHORT);
-//                    snackbar.show();
-//                    return true;
-//                }
-//            });
-            }
+        }
         return listItemView;
     }
 }

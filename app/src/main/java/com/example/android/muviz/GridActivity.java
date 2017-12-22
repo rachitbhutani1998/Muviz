@@ -45,39 +45,39 @@ public class GridActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-        Intent widgetIntent=new Intent(this,DetailActivity.class);
+        Intent widgetIntent = new Intent(this, DetailActivity.class);
         Intent intent = getIntent();
         sort = intent.getStringExtra("sort");
         order = intent.getStringExtra("order");
-        if (sort==null||order==null){
+        if (sort == null || order == null) {
             sort = "popularity";
             order = ".desc";
         }
-        progressSpinner=findViewById(R.id.progress_bar);
+        progressSpinner = findViewById(R.id.progress_bar);
         mGridView = findViewById(R.id.movies_grid);
         movieAsyncTask = new MovieAsyncTask();
-        moviesArrayList= new ArrayList<>();
-        mAdapter=new MovieAdapter(this,moviesArrayList);
+        moviesArrayList = new ArrayList<>();
+        mAdapter = new MovieAdapter(this, moviesArrayList);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent goToDetail=new Intent(GridActivity.this,DetailActivity.class);
-                goToDetail.putExtra("movie_id",moviesArrayList.get(i).getMovieId());
-                goToDetail.putExtra("movie_title",moviesArrayList.get(i).getMovieTitle());
+                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
+                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
+                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
                 startActivity(goToDetail);
             }
         });
         mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                Snackbar snackbar= Snackbar.make(view,moviesArrayList.get(i).getMovieTitle(),Snackbar.LENGTH_SHORT)
+                Snackbar snackbar = Snackbar.make(view, moviesArrayList.get(i).getMovieTitle(), Snackbar.LENGTH_SHORT)
                         .setAction("Open", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent goToDetail=new Intent(GridActivity.this,DetailActivity.class);
-                                goToDetail.putExtra("movie_id",moviesArrayList.get(i).getMovieId());
-                                goToDetail.putExtra("movie_title",moviesArrayList.get(i).getMovieTitle());
+                                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
+                                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
+                                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
                                 startActivity(goToDetail);
                             }
                         });
@@ -85,9 +85,9 @@ public class GridActivity extends AppCompatActivity {
                 return true;
             }
         });
-        noConnView=findViewById(R.id.no_con_view);
-        manager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        mRetry=findViewById(R.id.retry_button);
+        noConnView = findViewById(R.id.no_con_view);
+        manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mRetry = findViewById(R.id.retry_button);
         checkInternetConnection();
         mRetry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +96,12 @@ public class GridActivity extends AppCompatActivity {
                 checkInternetConnection();
             }
         });
-        widgetIntent.putExtra("movie_id","346364");
-        widgetIntent.putExtra("movie_title","It");
+        widgetIntent.putExtra("movie_id", "346364");
+        widgetIntent.putExtra("movie_title", "It");
         widgetIntent.setAction("Open_details");
         if (Build.VERSION.SDK_INT >= 25) {
-            mShortcut=getSystemService(ShortcutManager.class);
-            ShortcutInfo shortcutInfo=new ShortcutInfo.Builder(this,"shortcut")
+            mShortcut = getSystemService(ShortcutManager.class);
+            ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "shortcut")
                     .setShortLabel("Most Popular")
                     .setLongLabel("The most popular movie yet")
                     .setIntent(widgetIntent).build();
@@ -109,8 +109,8 @@ public class GridActivity extends AppCompatActivity {
         }
     }
 
-    public void checkInternetConnection(){
-        if (manager!=null) {
+    public void checkInternetConnection() {
+        if (manager != null) {
             if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
                     || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 fillLayout(sort + order);
@@ -155,7 +155,7 @@ public class GridActivity extends AppCompatActivity {
             String jsonResponse;
             try {
                 jsonResponse = NetworkUtils.makeHttpRequest(url);
-                moviesArrayList=NetworkUtils.extractMovieList(jsonResponse);
+                moviesArrayList = NetworkUtils.extractMovieList(jsonResponse);
             } catch (IOException e) {
                 e.printStackTrace();
             }
