@@ -28,13 +28,11 @@ class NetworkUtils {
 
     private static final String api_key = "api_key";
 
-    private static final String API_KEY = "<<Insert your API_KEY>>";
+    private static final String API_KEY = "fb3d1cb6e2de1c138354e8f94a91e2c2";
 
     private static final String LOG_TAG = "Network Utils: ";
 
     static URL buildURL(String query) {
-        if (API_KEY.equals("<<Insert your API_KEY>>"))
-            return null;
         Uri uri = Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM, query).appendQueryParameter(api_key, API_KEY).build();
         URL url = null;
         try {
@@ -46,8 +44,6 @@ class NetworkUtils {
     }
 
     static URL buildDetailURL(String id) {
-        if (API_KEY.equals("<<Insert your API_KEY>>"))
-            return null;
         Uri uri = Uri.parse(BASE_DETAIL_URL).buildUpon().appendPath(id).appendQueryParameter(api_key, API_KEY).build();
         URL url = null;
         try {
@@ -128,6 +124,18 @@ class NetworkUtils {
 
     static Movies extractMovie(String detailJSON) throws JSONException {
         JSONObject json = new JSONObject(detailJSON);
+        String title = json.optString("title");
+        String release_date = json.optString("release_date");
+        String plot = json.optString("overview");
+        String poster = json.optString("backdrop_path");
+        String rating = json.optString("vote_average");
+        return new Movies(poster, title, release_date, rating, plot);
+    }
+
+    static Movies mostPopular(String popularJSON) throws JSONException{
+        JSONObject sortedJSON=new JSONObject(popularJSON);
+        JSONArray resultArray=sortedJSON.optJSONArray("results");
+        JSONObject json = resultArray.optJSONObject(0);
         String title = json.optString("title");
         String release_date = json.optString("release_date");
         String plot = json.optString("overview");

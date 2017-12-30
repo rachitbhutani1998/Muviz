@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -36,7 +37,7 @@ public class GridActivity extends AppCompatActivity {
     ArrayList<Movies> moviesArrayList;
     MovieAdapter mAdapter;
     ProgressBar progressSpinner;
-    LinearLayout noConnView;
+    View noConnView;
     ConnectivityManager manager;
     Button mRetry;
     ShortcutManager mShortcut;
@@ -97,13 +98,13 @@ public class GridActivity extends AppCompatActivity {
                 checkInternetConnection();
             }
         });
-        widgetIntent.putExtra("movie_id", "346364");
-        widgetIntent.putExtra("movie_title", "It");
         widgetIntent.setAction("Open_details");
         if (Build.VERSION.SDK_INT >= 25) {
+            Icon i=Icon.createWithResource(getApplicationContext(),R.mipmap.ic_launcher);
             mShortcut = getSystemService(ShortcutManager.class);
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "shortcut")
                     .setShortLabel("Most Popular")
+                    .setIcon(i)
                     .setLongLabel("The most popular movie yet")
                     .setIntent(widgetIntent).build();
             mShortcut.setDynamicShortcuts(Collections.singletonList(shortcutInfo));
@@ -111,12 +112,10 @@ public class GridActivity extends AppCompatActivity {
     }
 
     public void checkInternetConnection() {
-        if (manager != null) {
             if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
                     || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 fillLayout(sort + order);
             else noConnView.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -163,7 +162,7 @@ public class GridActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e(TAG, "onOptionsItemSelected() returned: " + mUrl);
+            Log.i(TAG, "onOptionsItemSelected() returned: " + mUrl);
             return moviesArrayList;
         }
 

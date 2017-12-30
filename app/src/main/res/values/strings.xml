@@ -15,4 +15,7 @@
     <string name="retry">Retry</string>
     <string name="no_conn_message">Go get some popcorn or connect to the internet!</string>
     <string name="big_poster">poster of selected image</string>
+    <string name="title">Title</string>
+    <string name="release_date">Release Date</string>
+    <string name="movie_plot">Movie Plot</string>
 </resources>
