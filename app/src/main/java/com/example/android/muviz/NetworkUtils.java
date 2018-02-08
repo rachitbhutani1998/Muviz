@@ -28,7 +28,7 @@ class NetworkUtils {
 
     private static final String api_key = "api_key";
 
-    private static final String API_KEY = "fb3d1cb6e2de1c138354e8f94a91e2c2";
+    private static final String API_KEY = "<<YOUR API KEY HERE>>";
 
     private static final String LOG_TAG = "Network Utils: ";
 

@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -100,7 +99,7 @@ public class GridActivity extends AppCompatActivity {
         });
         widgetIntent.setAction("Open_details");
         if (Build.VERSION.SDK_INT >= 25) {
-            Icon i=Icon.createWithResource(getApplicationContext(),R.mipmap.ic_launcher);
+            Icon i=Icon.createWithResource(getApplicationContext(),R.mipmap.popular_icon);
             mShortcut = getSystemService(ShortcutManager.class);
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "shortcut")
                     .setShortLabel("Most Popular")
