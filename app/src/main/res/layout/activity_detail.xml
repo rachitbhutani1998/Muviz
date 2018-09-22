@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/background_light"
+    android:orientation="vertical"
     tools:context="com.example.android.muviz.DetailActivity">
 
     <ProgressBar
@@ -45,10 +46,39 @@
             android:text="@string/retry" />
     </LinearLayout>
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#66000000"
+        android:elevation="4dp"
+        tools:targetApi="lollipop" />
+
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/big_poster"
+        android:scaleType="fitXY" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_trailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:src="@android:drawable/ic_media_play"
+        app:fabSize="normal" />
+
     <ScrollView
+        android:id="@+id/scrollView_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView_detail">
+        android:layout_below="@id/detail_image">
 
         <LinearLayout
             android:id="@+id/movie_details"
@@ -60,20 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/my_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/transparent"
-                    android:elevation="4dp"
-                    tools:targetApi="lollipop" />
-
-                <ImageView
-                    android:id="@+id/detail_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/big_poster"
-                    android:scaleType="fitCenter" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,9 +116,10 @@
                         android:layout_height="50dp"
                         android:background="@drawable/rating_back"
                         android:gravity="center"
+                        android:padding="10dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/background_light"
-                        android:textSize="25sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </RelativeLayout>
@@ -170,6 +187,26 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/background_dark"
                 android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/reviews"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reviews_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,17 +15,23 @@
         android:roundIcon="@mipmap/round_movie"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GridActivity">
+        <activity android:name=".GridActivity" android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SettingActivity"
             android:label="Settings" />
-        <activity android:name=".DetailActivity" android:parentActivityName=".GridActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
-    </application>
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".GridActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+        <provider
+            android:name=".MovieProvider"
+            android:authorities="com.example.android.muviz"
+            android:exported="false" />
+    </application>
 </manifest>

@@ -1,48 +1,49 @@
 package com.example.android.muviz;
 
-class Movies{
-    private String mPosterUrl,mId,mTitle,mRelease,mRating,mPlot,mBackdrop;
-    static final String POSTER_BASE_URL="http://image.tmdb.org/t/p/w500";
+class Movies {
+    private String mPosterUrl, mId, mTitle, mRelease, mRating, mPlot, mBackdrop;
+    static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w500";
 
-    Movies(String posterUrl, String id,String title){
-        mPosterUrl=POSTER_BASE_URL+posterUrl;
-        mId=id;
-        mTitle=title;
+    Movies(String posterUrl, String id, String title) {
+        mPosterUrl = POSTER_BASE_URL + posterUrl;
+        mId = id;
+        mTitle = title;
     }
 
-    Movies(String posterUrl,String title,String release_date,String rating,String plot){
-        mBackdrop=posterUrl;
-        mTitle=title;
-        mRelease=release_date;
-        mRating=rating;
-        mPlot=plot;
+    Movies(String posterUrl, String title, String release_date, String rating, String plot, String id) {
+        mBackdrop = posterUrl;
+        mTitle = title;
+        mRelease = release_date;
+        mRating = rating;
+        mPlot = plot;
+        mId = id;
     }
 
-    String getReleaseDate(){
+    String getReleaseDate() {
         return mRelease;
     }
 
-    String getRating(){
+    String getRating() {
         return mRating;
     }
 
-    String getPlot(){
+    String getPlot() {
         return mPlot;
     }
 
-    String getBackdrop(){
+    String getBackdrop() {
         return mBackdrop;
     }
 
-    String getPoster(){
+    String getPoster() {
         return mPosterUrl;
     }
 
-    String getMovieTitle(){
+    String getMovieTitle() {
         return mTitle;
     }
 
-    String getMovieId(){
+    String getMovieId() {
         return mId;
     }
 }

@@ -14,9 +14,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class NetworkUtils {
 
@@ -93,8 +95,7 @@ class NetworkUtils {
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-            BufferedReader reader = new BufferedReader(inputStreamReader);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,Charset.forName("UTF-8")));
             String line = reader.readLine();
             while (line != null) {
                 output.append(line);
@@ -127,9 +128,10 @@ class NetworkUtils {
         String title = json.optString("title");
         String release_date = json.optString("release_date");
         String plot = json.optString("overview");
+        String id=json.optString("id");
         String poster = json.optString("backdrop_path");
         String rating = json.optString("vote_average");
-        return new Movies(poster, title, release_date, rating, plot);
+        return new Movies(poster, title, release_date, rating, plot,id);
     }
 
     static Movies mostPopular(String popularJSON) throws JSONException{
@@ -137,10 +139,41 @@ class NetworkUtils {
         JSONArray resultArray=sortedJSON.optJSONArray("results");
         JSONObject json = resultArray.optJSONObject(0);
         String title = json.optString("title");
+        String id=json.optString("id");
         String release_date = json.optString("release_date");
         String plot = json.optString("overview");
         String poster = json.optString("backdrop_path");
         String rating = json.optString("vote_average");
-        return new Movies(poster, title, release_date, rating, plot);
+        return new Movies(poster, title, release_date, rating, plot,id);
+    }
+
+
+    static String getTrailer(String jsonVideoResponse) throws JSONException {
+        JSONObject trailerObject=new JSONObject(jsonVideoResponse);
+        JSONArray resultArray=trailerObject.optJSONArray("results");
+        JSONObject officialTrailer=resultArray.optJSONObject(0);
+        return officialTrailer.optString("key");
+
+    }
+
+    static URL buildExtraUrl(String movie_id,String query) {
+        URL url=null;
+        Uri uri=Uri.parse(BASE_DETAIL_URL).buildUpon().appendPath(movie_id).appendPath(query).appendQueryParameter(api_key,API_KEY).build();
+        try {
+            url=new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    static HashMap<String,String> getReviews(String jsonReviewResponse) throws JSONException {
+        HashMap<String,String> map=new HashMap<>();
+        JSONObject resultObject=new JSONObject(jsonReviewResponse);
+        JSONArray resultArray=resultObject.optJSONArray("results");
+        for(int i=0;i<resultArray.length();i++){
+            map.put(resultArray.optJSONObject(i).optString("author"),resultArray.optJSONObject(i).optString("content"));
+        }
+        return map;
     }
 }

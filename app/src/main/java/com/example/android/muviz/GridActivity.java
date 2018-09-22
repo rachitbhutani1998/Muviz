@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.database.Cursor;
 import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,6 +22,8 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.android.muviz.data.DBHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +43,7 @@ public class GridActivity extends AppCompatActivity {
     ConnectivityManager manager;
     Button mRetry;
     ShortcutManager mShortcut;
+    DBHelper mDatabaseHelper;
 
 
     @Override
@@ -59,6 +63,7 @@ public class GridActivity extends AppCompatActivity {
         movieAsyncTask = new MovieAsyncTask();
         moviesArrayList = new ArrayList<>();
         mAdapter = new MovieAdapter(this, moviesArrayList);
+        mDatabaseHelper=new DBHelper(this);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,6 +146,12 @@ public class GridActivity extends AppCompatActivity {
                 goToSettings.putExtra("order", order + "");
                 startActivity(goToSettings);
                 break;
+            case R.id.fav_movies:
+                Cursor data=mDatabaseHelper.getMovies();
+                moviesArrayList.clear();
+                while (data.moveToNext()){
+
+                }
         }
         return true;
     }
