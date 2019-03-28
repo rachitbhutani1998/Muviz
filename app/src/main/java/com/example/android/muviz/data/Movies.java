@@ -1,16 +1,16 @@
-package com.example.android.muviz;
+package com.example.android.muviz.data;
 
-class Movies {
+public class Movies {
     private String mPosterUrl, mId, mTitle, mRelease, mRating, mPlot, mBackdrop;
-    static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w500";
+    public static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w500";
 
-    Movies(String posterUrl, String id, String title) {
+    public Movies(String posterUrl, String id, String title) {
         mPosterUrl = POSTER_BASE_URL + posterUrl;
         mId = id;
         mTitle = title;
     }
 
-    Movies(String posterUrl, String title, String release_date, String rating, String plot, String id) {
+    public Movies(String posterUrl, String title, String release_date, String rating, String plot, String id) {
         mBackdrop = posterUrl;
         mTitle = title;
         mRelease = release_date;
@@ -19,31 +19,31 @@ class Movies {
         mId = id;
     }
 
-    String getReleaseDate() {
+    public String getReleaseDate() {
         return mRelease;
     }
 
-    String getRating() {
+    public String getRating() {
         return mRating;
     }
 
-    String getPlot() {
+    public String getPlot() {
         return mPlot;
     }
 
-    String getBackdrop() {
+    public String getBackdrop() {
         return mBackdrop;
     }
 
-    String getPoster() {
+    public String getPoster() {
         return mPosterUrl;
     }
 
-    String getMovieTitle() {
+    public String getMovieTitle() {
         return mTitle;
     }
 
-    String getMovieId() {
+    public String getMovieId() {
         return mId;
     }
 }

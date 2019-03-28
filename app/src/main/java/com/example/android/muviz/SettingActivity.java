@@ -7,24 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 
+import com.example.android.muviz.data.PreferenceConfig;
+
 public class SettingActivity extends AppCompatActivity {
     String sort = "popularity", order = ".desc";
     RadioButton sortPop, sortAvg, orderAsc, orderDesc;
+    PreferenceConfig config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        Intent intent = getIntent();
         sortPop = findViewById(R.id.sort_popular);
         sortAvg = findViewById(R.id.sort_average);
         orderAsc = findViewById(R.id.order_asc);
         orderDesc = findViewById(R.id.order_desc);
-        if (intent.getStringExtra("sort").equals("vote_average"))
+
+        config = PreferenceConfig.getInstance(this);
+
+        if (config.getString(PreferenceConfig.SORT_BASIS, "popularity").equals("vote_average"))
             sortAvg.toggle();
         else sortPop.toggle();
 
-        if (intent.getStringExtra("order").equals(".asc"))
+        if (config.getString(PreferenceConfig.SORT_ORDER, ".desc").equals(".asc"))
             orderAsc.toggle();
         else orderDesc.toggle();
     }
@@ -53,8 +58,8 @@ public class SettingActivity extends AppCompatActivity {
             order = ".desc";
         if (orderAsc.isChecked())
             order = ".asc";
-        goToMain.putExtra("sort", sort + "");
-        goToMain.putExtra("order", order + "");
+        config.saveString(PreferenceConfig.SORT_ORDER, order);
+        config.saveString(PreferenceConfig.SORT_BASIS, sort);
         startActivity(goToMain);
         finish();
     }

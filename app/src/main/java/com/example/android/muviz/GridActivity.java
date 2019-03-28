@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.android.muviz.data.DBHelper;
+import com.example.android.muviz.data.Movies;
+import com.example.android.muviz.data.PreferenceConfig;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +32,8 @@ public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
     RecyclerView mGridView;
     URL mUrl;
-    String sort = "popularity", order = ".desc";
+    String sort;
+    String order;
     MovieAsyncTask movieAsyncTask;
     ArrayList<Movies> moviesArrayList;
     MovieAdapter mAdapter;
@@ -41,55 +42,29 @@ public class GridActivity extends AppCompatActivity {
     ConnectivityManager manager;
     Button mRetry;
     ShortcutManager mShortcut;
-    DBHelper mDatabaseHelper;
+
+    PreferenceConfig config;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
+
+        config = PreferenceConfig.getInstance(this);
+        sort = config.getString(PreferenceConfig.SORT_BASIS, "popularity");
+        order = config.getString(PreferenceConfig.SORT_ORDER, ".desc");
+
+
         Intent widgetIntent = new Intent(this, DetailActivity.class);
-        Intent intent = getIntent();
-        sort = intent.getStringExtra("sort");
-        order = intent.getStringExtra("order");
-        if (sort == null || order == null) {
-            sort = "popularity";
-            order = ".desc";
-        }
         progressSpinner = findViewById(R.id.progress_bar);
         mGridView = findViewById(R.id.movies_grid);
         moviesArrayList = new ArrayList<>();
-        mGridView.setLayoutManager(new GridLayoutManager(this,3));
+        mGridView.setLayoutManager(new GridLayoutManager(this, 3));
         mAdapter = new MovieAdapter(this, moviesArrayList);
         mGridView.setAdapter(mAdapter);
         movieAsyncTask = new MovieAsyncTask();
-        mDatabaseHelper = new DBHelper(this);
-//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
-//                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
-//                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
-//                startActivity(goToDetail);
-//            }
-//        });
-//        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-//                Snackbar snackbar = Snackbar.make(view, moviesArrayList.get(i).getMovieTitle(), Snackbar.LENGTH_SHORT)
-//                        .setAction("Open", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
-//                                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
-//                                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
-//                                startActivity(goToDetail);
-//                            }
-//                        });
-//                snackbar.show();
-//                return true;
-//            }
-//        });
+
         noConnView = findViewById(R.id.no_con_view);
         manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mRetry = findViewById(R.id.retry_button);
@@ -103,12 +78,12 @@ public class GridActivity extends AppCompatActivity {
         });
         widgetIntent.setAction("Open_details");
         if (Build.VERSION.SDK_INT >= 25) {
-            Icon i = Icon.createWithResource(getApplicationContext(), R.mipmap.popular_icon);
+            Icon i = Icon.createWithResource(getApplicationContext(), R.drawable.ic_group_black_24dp);
             mShortcut = getSystemService(ShortcutManager.class);
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "shortcut")
                     .setShortLabel("Most Popular")
                     .setIcon(i)
-                    .setLongLabel("The most popular movie yet")
+                    .setLongLabel("The most popular movie right now.")
                     .setIntent(widgetIntent).build();
             mShortcut.setDynamicShortcuts(Collections.singletonList(shortcutInfo));
         }

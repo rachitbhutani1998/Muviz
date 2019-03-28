@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.android.muviz.data.Movies;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movies movie = mMovies.get(position);
         if (movie != null) {
-            Glide.with(mContext).load(movie.getPoster()).into(holder.movieImage);
+            Glide.with(mContext)
+                    .load(movie.getPoster())
+                    .placeholder(mContext.getResources().getDrawable(R.drawable.no_conn_sq))
+                    .error(mContext.getResources().getDrawable(R.drawable.ic_error_outline_black_24dp))
+                    .into(holder.movieImage);
         }
     }
 
@@ -76,7 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     toDetailIntent.putExtra("movie_title", mMovies.get(getAdapterPosition()).getMovieTitle());
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((GridActivity) mContext,
                             movieImage, mContext.getString(R.string.image_transition));
-                    mContext.startActivity(toDetailIntent,optionsCompat.toBundle());
+                    mContext.startActivity(toDetailIntent, optionsCompat.toBundle());
                 }
             });
             movieImage.setOnLongClickListener(new View.OnLongClickListener() {

@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.android.muviz.data.DBHelper;
+import com.example.android.muviz.data.Movies;
 
 import org.json.JSONException;
 
@@ -175,7 +174,7 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Movies movies) {
             Glide.with(getApplicationContext()).load(Movies.POSTER_BASE_URL + movies.getBackdrop()).into(detailImage);
-            Float rating = Float.valueOf(movies.getRating()) / 2;
+            float rating = Float.valueOf(movies.getRating()) / 2;
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(movie.getMovieTitle());
             mRating.setVisibility(View.VISIBLE);
