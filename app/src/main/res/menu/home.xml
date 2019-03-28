@@ -6,9 +6,4 @@
         android:icon="@drawable/baseline_settings_black_24"
         android:title="@string/settings"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/fav_movies"
-        android:icon="@android:drawable/btn_star"
-        android:title="@string/favourites"
-        app:showAsAction="ifRoom" />
 </menu>

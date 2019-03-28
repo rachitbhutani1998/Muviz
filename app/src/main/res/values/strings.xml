@@ -21,4 +21,5 @@
     <string name="add_to_favourites">Add to favourites</string>
     <string name="reviews">Reviews</string>
     <string name="favourites">Favourites</string>
+    <string name="image_transition">image_transition</string>
 </resources>

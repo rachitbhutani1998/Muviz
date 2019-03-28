@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.database.Cursor;
 import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,7 +30,7 @@ import java.util.Collections;
 
 public class GridActivity extends AppCompatActivity {
     static final String TAG = "GridActivity";
-    GridView mGridView;
+    RecyclerView mGridView;
     URL mUrl;
     String sort = "popularity", order = ".desc";
     MovieAsyncTask movieAsyncTask;
@@ -60,37 +58,38 @@ public class GridActivity extends AppCompatActivity {
         }
         progressSpinner = findViewById(R.id.progress_bar);
         mGridView = findViewById(R.id.movies_grid);
-        movieAsyncTask = new MovieAsyncTask();
         moviesArrayList = new ArrayList<>();
+        mGridView.setLayoutManager(new GridLayoutManager(this,3));
         mAdapter = new MovieAdapter(this, moviesArrayList);
-        mDatabaseHelper=new DBHelper(this);
         mGridView.setAdapter(mAdapter);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
-                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
-                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
-                startActivity(goToDetail);
-            }
-        });
-        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                Snackbar snackbar = Snackbar.make(view, moviesArrayList.get(i).getMovieTitle(), Snackbar.LENGTH_SHORT)
-                        .setAction("Open", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
-                                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
-                                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
-                                startActivity(goToDetail);
-                            }
-                        });
-                snackbar.show();
-                return true;
-            }
-        });
+        movieAsyncTask = new MovieAsyncTask();
+        mDatabaseHelper = new DBHelper(this);
+//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
+//                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
+//                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
+//                startActivity(goToDetail);
+//            }
+//        });
+//        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+//                Snackbar snackbar = Snackbar.make(view, moviesArrayList.get(i).getMovieTitle(), Snackbar.LENGTH_SHORT)
+//                        .setAction("Open", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                Intent goToDetail = new Intent(GridActivity.this, DetailActivity.class);
+//                                goToDetail.putExtra("movie_id", moviesArrayList.get(i).getMovieId());
+//                                goToDetail.putExtra("movie_title", moviesArrayList.get(i).getMovieTitle());
+//                                startActivity(goToDetail);
+//                            }
+//                        });
+//                snackbar.show();
+//                return true;
+//            }
+//        });
         noConnView = findViewById(R.id.no_con_view);
         manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mRetry = findViewById(R.id.retry_button);
@@ -104,7 +103,7 @@ public class GridActivity extends AppCompatActivity {
         });
         widgetIntent.setAction("Open_details");
         if (Build.VERSION.SDK_INT >= 25) {
-            Icon i=Icon.createWithResource(getApplicationContext(),R.mipmap.popular_icon);
+            Icon i = Icon.createWithResource(getApplicationContext(), R.mipmap.popular_icon);
             mShortcut = getSystemService(ShortcutManager.class);
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "shortcut")
                     .setShortLabel("Most Popular")
@@ -116,10 +115,10 @@ public class GridActivity extends AppCompatActivity {
     }
 
     public void checkInternetConnection() {
-            if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
-                    || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-                fillLayout(sort + order);
-            else noConnView.setVisibility(View.VISIBLE);
+        if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            fillLayout(sort + order);
+        else noConnView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -130,7 +129,7 @@ public class GridActivity extends AppCompatActivity {
 
     void fillLayout(String query) {
         mUrl = NetworkUtils.buildURL(query);
-        if (mUrl==null)
+        if (mUrl == null)
             Toast.makeText(this, "Check that API key in NetworkUtils", Toast.LENGTH_SHORT).show();
         else
             movieAsyncTask.execute(mUrl);
@@ -146,12 +145,6 @@ public class GridActivity extends AppCompatActivity {
                 goToSettings.putExtra("order", order + "");
                 startActivity(goToSettings);
                 break;
-            case R.id.fav_movies:
-                Cursor data=mDatabaseHelper.getMovies();
-                moviesArrayList.clear();
-                while (data.moveToNext()){
-
-                }
         }
         return true;
     }
@@ -172,15 +165,15 @@ public class GridActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.i(TAG, "onOptionsItemSelected() returned: " + mUrl);
             return moviesArrayList;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Movies> s) {
             progressSpinner.setVisibility(View.GONE);
-            mAdapter.clear();
-            mAdapter.addAll(s);
+            moviesArrayList = s;
+            mAdapter.setMovies(moviesArrayList);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

@@ -23,7 +23,9 @@
         </activity>
         <activity
             android:name=".SettingActivity"
-            android:label="Settings" />
+            android:label="Settings"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".GridActivity"/>
         <activity
             android:name=".DetailActivity"
             android:parentActivityName=".GridActivity"

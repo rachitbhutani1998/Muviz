@@ -20,7 +20,6 @@ public class SettingActivity extends AppCompatActivity {
         sortAvg = findViewById(R.id.sort_average);
         orderAsc = findViewById(R.id.order_asc);
         orderDesc = findViewById(R.id.order_desc);
-
         if (intent.getStringExtra("sort").equals("vote_average"))
             sortAvg.toggle();
         else sortPop.toggle();
@@ -28,7 +27,6 @@ public class SettingActivity extends AppCompatActivity {
         if (intent.getStringExtra("order").equals(".asc"))
             orderAsc.toggle();
         else orderDesc.toggle();
-
     }
 
     @Override
@@ -59,5 +57,11 @@ public class SettingActivity extends AppCompatActivity {
         goToMain.putExtra("order", order + "");
         startActivity(goToMain);
         finish();
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
